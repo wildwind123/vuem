@@ -32,7 +32,6 @@
     "vue-tsc": "^2.1.10"
   },
   "imports": {
-    "#src/*": "./src/*",
     "#vuem/*": "./src/components/*"
   }
 }
