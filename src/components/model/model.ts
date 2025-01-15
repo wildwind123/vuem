@@ -4,6 +4,7 @@ type RouterName = keyof RouteMap
 
 type CategoryModel = {
   name: string
+  activeClass?: string
   routerName?: RouterName
   categoryList: CategoryModel[]
 }

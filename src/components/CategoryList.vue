@@ -7,7 +7,7 @@
       <li>
         <RouterLink :to="{
           name: item.routerName
-        }">
+        }" :active-class="item.activeClass">
           {{ item.name }}
         </RouterLink>
         <template v-if="item.categoryList.length > 0">
@@ -28,14 +28,13 @@
           <details>
             <summary>{{ item.name }}</summary>
             <CategoryList :category-list="getCategoryList(item)" :is-mobile="props.isMobile" :is-root="false">
-
             </CategoryList>
           </details>
         </template>
         <template v-else>
           <RouterLink :to="{
-            name: item.routerName
-          }">
+            name: item.routerName,
+          }" :active-class="item.activeClass">
             {{ item.name }}
           </RouterLink>
         </template>
@@ -56,6 +55,8 @@ const props = withDefaults(defineProps<{
   isMobile: true
 })
 
+
+
 const getCategoryList = (item: CategoryModel) => {
   if (!item.routerName) {
     return item.categoryList
@@ -63,7 +64,8 @@ const getCategoryList = (item: CategoryModel) => {
   const list = [{
     name: 'Перейти',
     routerName: item.routerName,
-    categoryList: []
+    categoryList: [],
+    activeClass: 'asdfasf'
   }, ...item.categoryList] as CategoryModel[]
   return list
 }
