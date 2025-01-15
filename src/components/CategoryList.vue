@@ -11,9 +11,7 @@
           {{ item.name }}
         </RouterLink>
         <template v-if="item.categoryList.length > 0">
-
           <CategoryList :category-list="item.categoryList" :is-root="false"></CategoryList>
-
         </template>
       </li>
     </template>
