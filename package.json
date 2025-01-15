@@ -1,7 +1,7 @@
 {
   "name": "vuedaisyui",
   "version": "0.0.6",
-  "private": false,
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -31,7 +31,8 @@
     "vite-plugin-vue-devtools": "^7.6.8",
     "vue-tsc": "^2.1.10"
   },
-  "files": [
-    "./src/components"
-  ]
+  "imports": {
+    "#src/*": "./src/*",
+    "#vuem/*": "./src/components/*"
+  }
 }
