@@ -1,6 +1,6 @@
 <template>
   <ul v-if="props.isMobile" :class="{
-    ['menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow']: props.isRoot,
+    [props.rootClass ?? '']: props.isRoot,
     ['p-2']: !props.isRoot
   }">
     <template v-for="(item, i) in props.categoryList" :key="i">
@@ -19,7 +19,7 @@
     </template>
   </ul>
   <ul v-else :class="{
-    ['menu menu-horizontal px-1']: props.isRoot,
+    [props.rootClass ?? '']: props.isRoot,
     ['p-2']: !props.isRoot,
   }">
     <template v-for="(item, i) in props.categoryList" :key="i">
@@ -50,6 +50,7 @@ const props = withDefaults(defineProps<{
   categoryList: CategoryModel[],
   isRoot?: boolean,
   isMobile?: boolean,
+  rootClass?: string
 }>(), {
   isRoot: true,
   isMobile: true
