@@ -19,6 +19,7 @@
           </li>
           <li><a>Item 3</a></li>
         </ul>
+
       </div>
       <slot name="name">
         <a class="btn btn-ghost text-xl">daisyUI</a>
@@ -38,6 +39,7 @@
         </li>
         <li><a>Item 3</a></li>
       </ul>
+      <CategoryList :category-list="props.categoryList" :is-mobile="false"></CategoryList>
     </div>
     <div class="navbar-end">
       <slot name="end">
@@ -45,4 +47,12 @@
       </slot>
     </div>
   </div>
+  <CategoryList :category-list="props.categoryList"></CategoryList>
 </template>
+<script lang="ts" setup>
+import CategoryList from '#vuem/CategoryList.vue';
+import { type CategoryModel } from '#vuem/model/model.ts';
+const props = defineProps<{
+  categoryList: CategoryModel[]
+}>()
+</script>

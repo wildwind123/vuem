@@ -1,7 +1,11 @@
-type HeaderCategory = {
+import type { RouteMap } from 'vue-router'
+
+type RouterName = keyof RouteMap
+
+type CategoryModel = {
   name: string
-  routerLink: string
-  categoryList: HeaderCategory[]
+  routerName?: RouterName
+  categoryList: CategoryModel[]
 }
 
-export { type HeaderCategory }
+export { type CategoryModel, type RouterName }
