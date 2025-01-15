@@ -15,7 +15,7 @@
         <a class="btn btn-ghost text-xl">daisyUI</a>
       </slot>
     </div>
-    <div class="navbar-center hidden lg:flex">
+    <div class="navbar-center hidden lg:flex z-10">
       <CategoryList :root-class="'menu menu-horizontal px-1'" :category-list="props.categoryList" :is-mobile="false">
       </CategoryList>
     </div>
