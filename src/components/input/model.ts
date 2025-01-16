@@ -3,3 +3,7 @@ export type TSelect = {
   value: string
   disabled: boolean
 }
+
+export interface TSelectStyled extends TSelect {
+  class?: string
+}
