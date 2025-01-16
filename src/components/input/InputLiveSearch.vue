@@ -21,7 +21,7 @@
         </div>
       </div>
       <div v-if="modeSearch" class="mt-3">
-        <input type="text" class="input input-bordered w-full  input-sm mr-2">
+        <input @input="search($event as InputEvent)" type="text" class="input input-bordered w-full  input-sm mr-2">
         <div v-if="chooseItems.length > 0" class="relative w-full">
           <ul class="p-2 flex flex-col gap-1 absolute left-0 top-0 z-10 bg-white w-full shadow-md ">
             <template v-for="item in chooseItemsComputed" :key="item.id">
@@ -47,6 +47,7 @@ import IconEditSquare from '../icons/IconEditSquare.vue';
 import IconClose from '../icons/IconClose.vue';
 import { computed, ref } from 'vue';
 import { useField } from 'vee-validate';
+import { debounce } from '../xutils/xutils';
 
 const props = defineProps<{
   selectedItems: TSelect[]
@@ -54,6 +55,15 @@ const props = defineProps<{
   label?: string
   chooseItems: TSelect[]
 }>()
+
+const emit = defineEmits<{
+  (e: 'event:search', v: string): void
+}>()
+
+
+const search = debounce((e: InputEvent) => {
+  emit('event:search', (e.target as HTMLInputElement).value)
+}, 700);
 
 const modeSearch = ref(false)
 const newChoosenItems = ref<TSelect[]>([])
