@@ -1,7 +1,7 @@
 <template>
   <div class="form-control w-full">
     <div v-if="props.label" class="label">
-      <span class="label-text">{{ props.label }}</span>
+      <span class="label-text font-semibold">{{ props.label }}</span>
     </div>
     <select v-model="value" class="select select-bordered select-sm w-full">
       <option v-if="props.nullable" :value="undefined">Не выбрано</option>

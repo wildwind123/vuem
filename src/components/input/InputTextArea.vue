@@ -3,11 +3,9 @@
     <div v-if="props.label" class="label">
       <span class="label-text font-semibold">{{ props.label }}</span>
     </div>
-    <div class="flex items-center">
-      <input :value="value" @change="value = ($event.target as HTMLInputElement).value" type="text"
-        :placeholder="props.placeholder" class="input input-bordered w-full  input-sm mr-2" />
-      <div v-if="meta.required" class="inline text-red-500">*</div>
-    </div>
+    <textarea :value="value" @change="value = ($event.target as HTMLInputElement).value" type="text"
+      :placeholder="props.placeholder" class="textarea textarea-bordered w-full input-sm" :class="props.textAreaClass"
+      :rows="1000" />
     <div v-if="errorMessage" class="label">
       <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
     </div>
@@ -21,9 +19,12 @@ const props = defineProps<{
   name: string,
   label?: string,
   placeholder?: string,
+  rows?: number
+  textAreaClass?: string
 }>()
 
-const { value, errorMessage, meta } = useField(() => props.name)
+
+const { value, errorMessage } = useField<string>(() => props.name)
 
 
 </script>
