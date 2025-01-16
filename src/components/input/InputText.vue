@@ -1,11 +1,11 @@
 <template>
-  <div class="form-control w-full max-w-sm">
+  <div class="form-control w-full ">
     <div v-if="props.label" class="label">
       <span class="label-text">{{ props.label }}</span>
     </div>
-    <div>
+    <div class="flex items-center">
       <input v-bind="$attrs" :value="value" @change="value = ($event.target as HTMLInputElement).value" type="text"
-        :placeholder="props.placeholder" class="input input-bordered w-full max-w-xs input-sm mr-2" />
+        :placeholder="props.placeholder" class="input input-bordered w-full  input-sm mr-2" />
       <div v-if="meta.required" class="inline text-red-500">*</div>
     </div>
     <div v-if="errorMessage" class="label">
