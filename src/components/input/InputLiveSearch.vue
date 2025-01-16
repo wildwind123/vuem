@@ -57,6 +57,7 @@ const props = defineProps<{
 
 const modeSearch = ref(true)
 const newChoosenItems = ref<TSelect[]>([])
+const delItemIds = ref<(number | string)[]>([])
 
 const { value, setValue } = useField<(number | string)[] | undefined>(() => props.name)
 
@@ -66,6 +67,10 @@ const badgeList = computed<TSelectStyled[]>(() => {
     if (!(value.value ?? []).includes(props.selectedItems[i].id)) {
       continue
     }
+    if (delItemIds.value.includes(props.selectedItems[i].id)) {
+      list.push({ ...props.selectedItems[i], class: 'bg-red-400' })
+      continue
+    }
     list.push(props.selectedItems[i])
   }
 
@@ -73,6 +78,10 @@ const badgeList = computed<TSelectStyled[]>(() => {
     if (!(value.value ?? []).includes(newChoosenItems.value[i].id)) {
       continue
     }
+    if (props.selectedItems.map(v => v.id).includes(newChoosenItems.value[i].id)) {
+      continue
+    }
+
     list.push({ ...newChoosenItems.value[i], class: 'bg-blue-400' })
   }
 
@@ -83,10 +92,24 @@ const chooseItemsComputed = computed<TSelectStyled[]>(() => {
   const list: TSelectStyled[] = []
 
   for (let i = 0; i < props.chooseItems.length; i++) {
-    if ((value.value ?? []).includes(props.chooseItems[i].id)) {
+    if (delItemIds.value.includes(props.chooseItems[i].id)) {
+      list.push({ ...props.chooseItems[i], class: 'bg-red-400' })
+      continue
+    }
+
+    const existInValues = (value.value ?? []).includes(props.chooseItems[i].id)
+
+    if (newChoosenItems.value.map(v => v.id).includes(props.chooseItems[i].id) && existInValues) {
+      list.push({ ...props.chooseItems[i], disabled: true, class: 'bg-blue-400' })
+      continue
+    }
+
+    if (existInValues) {
       list.push({ ...props.chooseItems[i], disabled: true, class: 'bg-accent' })
       continue
     }
+
+
     list.push(props.chooseItems[i])
   }
 
@@ -100,11 +123,15 @@ const addItem = (item: TSelect) => {
   const newItems = [...(value.value ?? [])]
   newItems.push(item.id)
   setValue(newItems)
+  if (newChoosenItems.value.map(v => v.id).includes(item.id)) {
+    return
+  }
+
   newChoosenItems.value.push(item)
 }
 
 const delItem = (item: TSelectStyled) => {
-  setValue([...(value.value ?? []).filter(v => v != item.id)])
+  setValue((value.value ?? []).filter(v => v != item.id))
 }
 
 </script>
