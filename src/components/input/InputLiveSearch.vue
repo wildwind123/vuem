@@ -10,7 +10,7 @@
     <div class="border p-2">
       <div>
         <div>
-          <template v-if="props.selectedItems.length > 0">
+          <template v-if="badgeList.length > 0">
             <SelectedItems :items="badgeList" @event:close="delItem"></SelectedItems>
           </template>
           <template v-else>
@@ -55,7 +55,7 @@ const props = defineProps<{
   chooseItems: TSelect[]
 }>()
 
-const modeSearch = ref(true)
+const modeSearch = ref(false)
 const newChoosenItems = ref<TSelect[]>([])
 const delItemIds = ref<(number | string)[]>([])
 
