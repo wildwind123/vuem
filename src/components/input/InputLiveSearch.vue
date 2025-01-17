@@ -2,10 +2,11 @@
   <div>
     <div v-if="props.label" class="label flex justify-start">
       <span class="label-text font-semibold mr-4"> {{ props.label }} </span>
-      <button @click="modeSearch = !modeSearch">
+      <button class="mr-4" @click="modeSearch = !modeSearch">
         <IconEditSquare v-if="!modeSearch"></IconEditSquare>
         <IconClose v-else></IconClose>
       </button>
+      <span v-if="props.isLoading" class="loading loading-spinner"></span>
     </div>
     <div class="border p-2">
       <div>
@@ -54,6 +55,7 @@ const props = defineProps<{
   name: string
   label?: string
   chooseItems: TSelect[]
+  isLoading?: boolean
 }>()
 
 const emit = defineEmits<{
