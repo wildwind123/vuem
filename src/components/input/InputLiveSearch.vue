@@ -38,23 +38,26 @@
           </ul>
         </div>
       </div>
+      <div v-if="errorMessage" class="label">
+        <span class="label-text text-red-500">{{ errorMessage }}</span>
+      </div>
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends string | number">
 import { type TSelect, type TSelectStyled } from './model';
 import SelectedItems from './SelectedItems.vue';
 import IconEditSquare from '../icons/IconEditSquare.vue';
 import IconClose from '../icons/IconClose.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 import { useField } from 'vee-validate';
 import { debounce } from '../xutils/xutils';
 
 const props = defineProps<{
-  selectedItems: TSelect[]
+  selectedItems: TSelect<T>[]
   name: string
   label?: string
-  chooseItems: TSelect[]
+  chooseItems: TSelect<T>[]
   isLoading?: boolean
 }>()
 
@@ -68,13 +71,13 @@ const search = debounce((e: InputEvent) => {
 }, 700);
 
 const modeSearch = ref(false)
-const newChoosenItems = ref<TSelect[]>([])
-const delItemIds = ref<(number | string)[]>([])
+const newChoosenItems = ref<TSelect<T>[]>([]) as Ref<TSelect<T>[]>
+const delItemIds = ref<T[]>([]) as Ref<T[]>
 
-const { value, setValue } = useField<(number | string)[] | undefined>(() => props.name)
+const { value, setValue, errorMessage } = useField<(number | string)[] | undefined>(() => props.name)
 
-const badgeList = computed<TSelectStyled[]>(() => {
-  const list: TSelectStyled[] = []
+const badgeList = computed<TSelectStyled<T>[]>(() => {
+  const list: TSelectStyled<T>[] = []
   for (let i = 0; i < props.selectedItems.length; i++) {
     if (!(value.value ?? []).includes(props.selectedItems[i].id)) {
       continue
@@ -100,8 +103,8 @@ const badgeList = computed<TSelectStyled[]>(() => {
   return list
 })
 
-const chooseItemsComputed = computed<TSelectStyled[]>(() => {
-  const list: TSelectStyled[] = []
+const chooseItemsComputed = computed<TSelectStyled<T>[]>(() => {
+  const list: TSelectStyled<T>[] = []
 
   for (let i = 0; i < props.chooseItems.length; i++) {
     if (delItemIds.value.includes(props.chooseItems[i].id)) {
@@ -128,7 +131,7 @@ const chooseItemsComputed = computed<TSelectStyled[]>(() => {
   return list
 })
 
-const addItem = (item: TSelect) => {
+const addItem = (item: TSelect<T>) => {
   if ((value.value ?? []).includes(item.id)) {
     return
   }
@@ -142,7 +145,7 @@ const addItem = (item: TSelect) => {
   newChoosenItems.value.push(item)
 }
 
-const delItem = (item: TSelectStyled) => {
+const delItem = (item: TSelectStyled<T>) => {
   setValue((value.value ?? []).filter(v => v != item.id))
 }
 

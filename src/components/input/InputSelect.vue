@@ -27,7 +27,7 @@ const props = defineProps<{
   label?: string
   placeholder?: string
   nullable?: boolean
-  values: TSelect[]
+  values: TSelect<string | number>[]
 }>()
 
 const emit = defineEmits<{

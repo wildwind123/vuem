@@ -7,16 +7,16 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends string | number">
 import { type TSelectStyled } from './model';
 import IconClose from '../icons/IconClose.vue';
 
 const props = defineProps<{
-  items: TSelectStyled[]
+  items: TSelectStyled<T>[]
 }>()
 
 const emit = defineEmits<{
-  (e: 'event:close', v: TSelectStyled): void
+  (e: 'event:close', v: TSelectStyled<T>): void
 }>()
 
 </script>
