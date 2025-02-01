@@ -52,45 +52,82 @@ const checkPhone = (phone: string, info: CountryInfo) => {
   }
 }
 
-const getZodPhoneCheck = (allowEmpty: boolean) => {
-  let numberCheck = zod.string()
-  if (allowEmpty) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    numberCheck = zod.string().optional()
-  }
-
+const getZodPhoneCheck = (allowEmpty?: boolean) => {
   return zod
-    .object({
-      number: numberCheck,
-      country_code: zod.string().min(2),
-    })
-    .superRefine((v, ctx) => {
-      if (allowEmpty && (v.number == undefined || v.number == '')) {
-        return true
-      } else if ((!allowEmpty && v.number == undefined) || v.number == '') {
-        return false
-      }
+    .string()
+    .optional()
+    .refine(
+      (phone) => {
+        const countryCode = getCountryCode(phone, 'US')
+        const number = getPhoneNumber(phone)
+        if (allowEmpty && (number == '' || number == undefined)) {
+          return true
+        }
 
-      let valid = false
-      try {
-        const phoneNumber = parsePhoneNumberWithError(v.number!, {
-          defaultCountry: v.country_code as CountryCode,
-        })
-        valid = phoneNumber?.isValid()
-      } catch {
-        valid = false
-      }
-
-      if (valid == true) {
-        return true
-      }
-      ctx.addIssue({
-        code: zod.ZodIssueCode.custom,
-        path: ['number'],
+        let valid = false
+        try {
+          const phoneNumber = parsePhoneNumberWithError(number, {
+            defaultCountry: countryCode as CountryCode,
+          })
+          valid = phoneNumber?.isValid()
+        } catch {
+          valid = false
+        }
+        return valid
+      },
+      {
         message: 'Проверьте номер телефона',
-      })
-    })
+      },
+    )
 }
 
-export { getCountryInfoMap, checkPhone, getZodPhoneCheck }
+function withoutPrefix(input: string) {
+  const match = input.match(/^\d*([A-Z]+\d+)$/)
+  if (match) {
+    return match[1]
+  }
+  return null // Return null if the input doesn't match the expected pattern
+}
+
+const getPhoneNumber = (v: string | undefined) => {
+  if (!v) {
+    return ''
+  }
+  const wP = withoutPrefix(v)
+  if (!wP) {
+    return ''
+  }
+  if (!firstTwoAreLetters(wP)) {
+    return ''
+  }
+  return wP.slice(2)
+}
+
+function firstTwoAreLetters(str: string) {
+  // Check if the string has at least two characters
+  if (str.length < 2) return false
+
+  // Use regex to check if the first two characters are letters
+  return /^[a-zA-Z]{2}/.test(str)
+}
+
+const getCountryCode = (v: string | undefined, defaultCountry: CountryCode) => {
+  if (!v) {
+    return defaultCountry
+  }
+  const wP = withoutPrefix(v)
+  if (!wP) {
+    return defaultCountry
+  }
+  return wP.slice(0, 2)
+}
+
+export {
+  getCountryInfoMap,
+  checkPhone,
+  getZodPhoneCheck,
+  withoutPrefix,
+  getPhoneNumber,
+  getCountryCode,
+  type CountryInfo,
+}
