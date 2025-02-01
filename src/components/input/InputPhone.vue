@@ -33,6 +33,10 @@ const props = withDefaults(defineProps<{
 }>(), {
 })
 
+const emit = defineEmits<{
+  (e: 'event:change', v: string): void
+}>()
+
 const checkDigit = (event: KeyboardEvent) => {
   const check = event.key.length === 1 && isNaN(Number(event.key));
   const isShortcut = event.metaKey || event.ctrlKey;
@@ -40,6 +44,8 @@ const checkDigit = (event: KeyboardEvent) => {
     event.preventDefault();
   }
 }
+
+
 
 const countryInfoMap = getCountryInfoMap()
 
@@ -67,11 +73,13 @@ const countryInfoMapFiltered = () => {
 
 const setValue = (v: string) => {
   value.value = `${countryInfoMap.get(getCountryCode(value.value, props.defaultCountryCode))?.prefix ?? '00'}${getCountryCode(value.value, props.defaultCountryCode)}${v ?? ''}`;
+  emit('event:change', value.value)
 }
 
 const setCountryCode = (v: HTMLSelectElement) => {
   const cc = v.options[v.selectedIndex].value
   value.value = `${countryInfoMap.get(getCountryCode(value.value, props.defaultCountryCode))?.prefix ?? '00'}${cc}${getPhoneNumber(value.value)}`
+  emit('event:change', value.value)
 }
 
 const { value, errorMessage } = useField<string | undefined>(() => props.name)
