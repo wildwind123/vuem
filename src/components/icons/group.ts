@@ -1,6 +1,6 @@
-import IconEditSquareVue from '#vuem/icons/IconEditSquare.vue'
-import IconDelete from '#vuem/icons/IconDelete.vue'
-import IconClose from '#vuem/icons/IconClose.vue'
+import IconEditSquareVue from './IconEditSquare.vue'
+import IconDelete from './IconDelete.vue'
+import IconClose from './IconClose.vue'
 
 const Icons = {
   EditSquare: IconEditSquareVue,
