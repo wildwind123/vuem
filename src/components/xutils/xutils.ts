@@ -18,6 +18,11 @@ const toStringOrUndefined = <T>(value: T): string | undefined => {
   return value
 }
 
+function removeLetters(inputString: string) {
+  // Remove all non-digit characters
+  return inputString.replace(/\D/g, '')
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function debounce<T extends (...args: any[]) => any>(
   func: T,
@@ -41,4 +46,4 @@ function debounce<T extends (...args: any[]) => any>(
   }
 }
 
-export { toIntOrUndefined, toStringOrUndefined, debounce }
+export { toIntOrUndefined, toStringOrUndefined, debounce, removeLetters }
