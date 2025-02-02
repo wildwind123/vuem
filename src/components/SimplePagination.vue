@@ -2,20 +2,29 @@
   <div v-if="props.limit != undefined && props.offset != undefined">
     <div class="join flex  justify-center flex-wrap mb-4">
       <template v-if="currentPage != 1 && (pages[0] ?? 0) != 1">
-        <button class="join-item btn " @click="toPage(1)">1</button>
+        <button class="join-item btn " @click="toPage(1)" :class="{
+          ['btn-sm']: props.mode == 'small'
+        }">1</button>
       </template>
       <template v-if="(pages[0] ?? 0) > 2">
-        <button class="join-item btn  disabled">...</button>
+        <button class="join-item btn  disabled" :class="{
+          ['btn-sm']: props.mode == 'small'
+        }">...</button>
       </template>
       <template v-for="page in pages" :key="page">
-        <button @click="toPage(page)" :class="{ ['btn-active']: page == currentPage }" class="join-item btn ">{{
-          page }}</button>
+        <button @click="toPage(page)"
+          :class="{ ['btn-active']: page == currentPage, ['btn-sm']: props.mode == 'small' }" class="join-item btn">{{
+            page }}</button>
       </template>
       <template v-if="(pages[pages.length - 1] ?? 0) < latestPage - 1">
-        <button class="join-item btn  disabled">...</button>
+        <button :class="{
+          ['btn-sm']: props.mode == 'small'
+        }" class="join-item btn  disabled">...</button>
       </template>
       <template v-if="(pages[pages.length - 1] ?? 0) < latestPage">
-        <button class="join-item btn " @click="toPage(latestPage)">{{ latestPage }}</button>
+        <button :class="{
+          ['btn-sm']: props.mode == 'small'
+        }" class="join-item btn " @click="toPage(latestPage)">{{ latestPage }}</button>
       </template>
 
     </div>
@@ -23,9 +32,9 @@
       <template v-if="currentPage - 1 > 0">
 
       </template>
-      <button :class="{ ['btn-disabled']: currentPage - 1 <= 0 }" @click="toPage(currentPage - 1)"
-        class="join-item btn  ">Предыдущий</button>
-      <button :class="{ ['btn-disabled']: currentPage + 1 > latestPage }" @click="() => {
+      <button :class="{ ['btn-disabled']: currentPage - 1 <= 0, ['btn-sm']: props.mode == 'small' }"
+        @click="toPage(currentPage - 1)" class="join-item btn  ">Предыдущий</button>
+      <button :class="{ ['btn-disabled']: currentPage + 1 > latestPage, ['btn-sm']: props.mode == 'small' }" @click="() => {
         toPage(currentPage + 1)
       }" class="join-item btn  ">Следующий</button>
     </div>
@@ -39,6 +48,7 @@ const props = defineProps<{
   offset?: number
   count?: number
   requestUrl?: string
+  mode?: 'small'
 }>()
 
 const emit = defineEmits<{
