@@ -5,7 +5,9 @@
     </div>
     <div class="flex items-center">
       <input :value="value" @input="changeVal(($event.target as HTMLInputElement).value)" type="text"
-        :placeholder="props.placeholder" class="input input-bordered w-full  input-sm mr-2" />
+        :placeholder="props.placeholder" class="input input-bordered w-full   mr-2" :class="{
+          [getInputSize(props.size, 'input')]: true,
+        }" />
       <div v-if="meta.required" class="inline text-red-500">*</div>
     </div>
     <div v-if="errorMessage" class="label">
@@ -16,12 +18,16 @@
 
 <script setup lang="ts">
 import { useField } from 'vee-validate';
+import { type InputSize, getInputSize } from './model.ts';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   name: string,
   label?: string,
   placeholder?: string,
-}>()
+  size?: InputSize
+}>(), {
+  size: 'sm'
+})
 
 const emit = defineEmits<{
   (e: 'event:change', v: string | unknown): void

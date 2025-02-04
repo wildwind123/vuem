@@ -12,3 +12,9 @@ export type TSelectedAttribute<T extends string | number> = {
   id: T
   value: string
 }
+
+export type InputSize = 'sm' | 'xs'
+
+export const getInputSize = (size: InputSize, type: 'input' | 'select') => {
+  return `${type}-${size}`
+}

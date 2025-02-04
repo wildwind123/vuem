@@ -1,9 +1,11 @@
 <template>
-  <div class="form-control w-full">
+  <div class="form-control ">
     <div v-if="props.label" class="label">
       <span class="label-text font-semibold">{{ props.label }}</span>
     </div>
-    <select v-model="value" class="select select-bordered select-sm w-full">
+    <select v-model="value" class="select select-bordered" :class="{
+      [getInputSize(props.size, 'select')]: true,
+    }">
       <option v-if="props.nullable" :value="undefined">Не выбрано</option>
       <template v-for="item in props.values" :key="item.id">
         <option :value="item.id" :disabled="item.disabled">
@@ -21,14 +23,18 @@
 import { useField } from 'vee-validate'
 import { type TSelect } from './model.ts'
 import { watch } from 'vue'
+import { type InputSize, getInputSize } from './model.ts';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   name: string
   label?: string
   placeholder?: string
   nullable?: boolean
   values: TSelect<string | number>[]
-}>()
+  size?: InputSize
+}>(), {
+  size: 'sm'
+})
 
 const emit = defineEmits<{
   (e: 'change', v: number | string | undefined): void
