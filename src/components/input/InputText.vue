@@ -1,7 +1,9 @@
 <template>
   <div class="form-control w-full ">
-    <div v-if="props.label" class="label">
-      <span class="label-text font-semibold">{{ props.label }}</span>
+    <div v-if="props.label" class="label ">
+      <span class="label-text font-semibold " :class="{
+        [getInputSize(props.size, 'text')]: true,
+      }">{{ props.label }}</span>
     </div>
     <div class="flex items-center">
       <input :value="value" @input="changeVal(($event.target as HTMLInputElement).value)" type="text"

@@ -15,6 +15,6 @@ export type TSelectedAttribute<T extends string | number> = {
 
 export type InputSize = 'sm' | 'xs'
 
-export const getInputSize = (size: InputSize, type: 'input' | 'select') => {
+export const getInputSize = (size: InputSize, type: 'input' | 'select' | 'btn' | 'text') => {
   return `${type}-${size}`
 }

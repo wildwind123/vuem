@@ -1,15 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
+    <div v-if="props.label" class="label ">
+      <span class="label-text font-semibold " :class="{
+        [getInputSize(props.size, 'text')]: true,
+      }">{{ props.label }}</span>
+    </div>
     <div class="flex items-center gap-1">
-      <select class="select select-bordered select-sm" @change="setCountryCode(($event.target as HTMLSelectElement))">
+      <select class="select select-bordered" @change="setCountryCode(($event.target as HTMLSelectElement))"
+        :class="{ [getInputSize(props.size, 'select')]: true }">
         <option :selected="countryCode == item[0]" :value="item[0]" class="text-end"
           v-for="(item, i) in countryInfoMapFiltered()" :key="i">
           {{ item[0] }} {{ item[1].icon }} +{{ item[1].prefix }}
         </option>
       </select>
       <input :value="phoneNumber" @input="setValue(($event.target as HTMLInputElement).value)" @keydown="checkDigit"
-        type="text" class="input input-bordered input-sm max-w-[180px]">
+        type="text" class="input input-bordered max-w-[180px]" :class="{ [getInputSize(props.size, 'input')]: true }">
       <div v-if="!props.allowEmpty" class="inline text-red-500">*</div>
     </div>
     <div>
@@ -24,13 +30,17 @@ import { getCountryInfoMap, getPhoneNumber, getCountryCode, type CountryInfo } f
 import type { CountryCode } from 'libphonenumber-js';
 import { useField } from 'vee-validate';
 import { computed } from 'vue';
+import { type InputSize, getInputSize } from './model';
 
 const props = withDefaults(defineProps<{
   name: string,
   allowEmpty?: boolean,
   defaultCountryCode: CountryCode,
   allowedCountryCode?: CountryCode[]
+  size?: InputSize,
+  label?: string,
 }>(), {
+  size: 'sm'
 })
 
 const emit = defineEmits<{
