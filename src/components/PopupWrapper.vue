@@ -1,13 +1,16 @@
 <template>
   <Teleport to="body">
-    <div class="flex items-center justify-center fixed left-0 top-0 h-[100vh] w-[100vw]  bg-[rgb(247,247,247,1)]/50">
+    <div
+      class="overflow-auto flex items-center justify-center fixed left-0 top-0 h-[100vh] w-[100vw] max-h-[100vh] max-w-[100vw]  bg-[rgb(247,247,247,1)]/50">
       <div class="absolute top-0 right-2 inline-block">
         <button @click="emit('event:close')">
           <IconClose class="h-9 w-9"></IconClose>
         </button>
       </div>
-      <slot>
-      </slot>
+      <div style="max-height: -webkit-fill-available;">
+        <slot>
+        </slot>
+      </div>
     </div>
   </Teleport>
 </template>

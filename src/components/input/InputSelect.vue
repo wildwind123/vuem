@@ -1,7 +1,9 @@
 <template>
   <div class="form-control ">
     <div v-if="props.label" class="label">
-      <span class="label-text font-semibold">{{ props.label }}</span>
+      <span class="label-text font-semibold" :class="{
+        [getInputSize(props.size, 'text')]: true,
+      }">{{ props.label }}</span>
     </div>
     <select v-model="value" class="select select-bordered" :class="{
       [getInputSize(props.size, 'select')]: true,
