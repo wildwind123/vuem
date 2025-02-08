@@ -7,7 +7,7 @@
           <IconClose class="h-9 w-9"></IconClose>
         </button>
       </div>
-      <div style="max-height: -webkit-fill-available;">
+      <div style="max-height: -webkit-fill-available; max-width: -webkit-fill-available;">
         <slot>
         </slot>
       </div>
