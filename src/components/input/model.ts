@@ -15,6 +15,13 @@ export type TSelectedAttribute<T extends string | number> = {
 
 export type InputSize = 'sm' | 'xs'
 
-export const getInputSize = (size: InputSize, type: 'input' | 'select' | 'btn' | 'text') => {
-  return `${type}-${size}`
+export const daisyuiSizeVariant = {
+  'input-xs': 'input-xs',
+  'input-sm': 'input-sm',
+  'select-xs': 'select-xs',
+  'select-sm': 'select-sm',
+  'btn-xs': 'btn-xs',
+  'btn-sm': 'btn-sm',
+  'text-xs': 'text-xs',
+  'text-sm': 'text-sm',
 }

@@ -2,13 +2,13 @@
   <div class="form-control w-full ">
     <div v-if="props.label" class="label ">
       <span class="label-text font-semibold " :class="{
-        [getInputSize(props.size, 'text')]: true,
+        [daisyuiSizeVariant[`text-${props.size}`]]: true,
       }">{{ props.label }}</span>
     </div>
     <div class="flex items-center">
       <input :value="value" @input="changeVal(($event.target as HTMLInputElement).value)" type="text"
         :placeholder="props.placeholder" class="input input-bordered w-full   mr-2" :class="{
-          [getInputSize(props.size, 'input')]: true,
+          [daisyuiSizeVariant[`input-${props.size}`]]: true,
         }" />
       <div v-if="meta.required" class="inline text-red-500">*</div>
     </div>
@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { useField } from 'vee-validate';
-import { type InputSize, getInputSize } from './model.ts';
+import { type InputSize, daisyuiSizeVariant } from './model.ts';
 
 const props = withDefaults(defineProps<{
   name: string,

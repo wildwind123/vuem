@@ -2,11 +2,11 @@
   <div class="form-control ">
     <div v-if="props.label" class="label">
       <span class="label-text font-semibold" :class="{
-        [getInputSize(props.size, 'text')]: true,
+        [daisyuiSizeVariant[`text-${props.size}`]]: true,
       }">{{ props.label }}</span>
     </div>
     <select v-model="value" class="select select-bordered" :class="{
-      [getInputSize(props.size, 'select')]: true,
+      [daisyuiSizeVariant[`select-${props.size}`]]: true,
     }">
       <option v-if="props.nullable" :value="undefined">Не выбрано</option>
       <template v-for="item in props.values" :key="item.id">
@@ -25,7 +25,7 @@
 import { useField } from 'vee-validate'
 import { type TSelect } from './model.ts'
 import { watch } from 'vue'
-import { type InputSize, getInputSize } from './model.ts';
+import { type InputSize, daisyuiSizeVariant } from './model.ts';
 
 const props = withDefaults(defineProps<{
   name: string
