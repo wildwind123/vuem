@@ -1,6 +1,7 @@
 <template>
   <div class="form-control w-full ">
     <div v-if="props.label" class="label ">
+
       <span class="label-text font-semibold " :class="{
         [daisyuiSizeVariant[`text-${props.size}`]]: true,
       }">{{ props.label }}</span>

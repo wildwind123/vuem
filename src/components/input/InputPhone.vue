@@ -19,9 +19,9 @@
         :class="{ [daisyuiSizeVariant[`input-${props.size}`]]: true }">
       <div v-if="!props.allowEmpty" class="inline text-red-500">*</div>
     </div>
-    <div>
+    <div class="min-h-8">
       <div v-if="errorMessage" class="label">
-        <span class="label-text-alt text-red-500">{{ errorMessage }}</span>
+        <span class="label-text-alt text-red-500 ">{{ errorMessage }}</span>
       </div>
     </div>
   </div>
