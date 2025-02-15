@@ -30,6 +30,5 @@ import CategoryList from '#vuem/CategoryList.vue';
 import { type CategoryModel } from '#vuem/model/model.ts';
 const props = defineProps<{
   categoryList: CategoryModel[],
-  categoryClass?: string
 }>()
 </script>
