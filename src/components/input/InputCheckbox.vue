@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
   uncheckedValue: false
 });
 
-const { handleChange, errorMessage, checked } = useField(() => props.name, undefined, {
+const { handleChange, errorMessage, checked } = useField<boolean>(() => props.name, undefined, {
   type: 'checkbox',
   checkedValue: props.checkedValue,
   uncheckedValue: props.uncheckedValue
