@@ -3,27 +3,28 @@
     <div class="join flex  justify-center flex-wrap mb-4">
       <template v-if="currentPage != 1 && (pages[0] ?? 0) != 1">
         <button class="join-item btn " @click="toPage(1)" :class="{
-          ['btn-sm']: props.mode == 'small'
+          [daisyuiSizeVariant[`btn-${props.size}`]]: true,
         }">1</button>
       </template>
       <template v-if="(pages[0] ?? 0) > 2">
         <button class="join-item btn  disabled" :class="{
-          ['btn-sm']: props.mode == 'small'
+          [daisyuiSizeVariant[`btn-${props.size}`]]: true,
         }">...</button>
       </template>
       <template v-for="page in pages" :key="page">
         <button @click="toPage(page)"
-          :class="{ ['btn-active']: page == currentPage, ['btn-sm']: props.mode == 'small' }" class="join-item btn">{{
+          :class="{ ['btn-active']: page == currentPage, [daisyuiSizeVariant[`btn-${props.size}`]]: true }"
+          class="join-item btn">{{
             page }}</button>
       </template>
       <template v-if="(pages[pages.length - 1] ?? 0) < latestPage - 1">
         <button :class="{
-          ['btn-sm']: props.mode == 'small'
+          [daisyuiSizeVariant[`btn-${props.size}`]]: true
         }" class="join-item btn  disabled">...</button>
       </template>
       <template v-if="(pages[pages.length - 1] ?? 0) < latestPage">
         <button :class="{
-          ['btn-sm']: props.mode == 'small'
+          [daisyuiSizeVariant[`btn-${props.size}`]]: true
         }" class="join-item btn " @click="toPage(latestPage)">{{ latestPage }}</button>
       </template>
 
@@ -32,24 +33,28 @@
       <template v-if="currentPage - 1 > 0">
 
       </template>
-      <button :class="{ ['btn-disabled']: currentPage - 1 <= 0, ['btn-sm']: props.mode == 'small' }"
+      <button :class="{ ['btn-disabled']: currentPage - 1 <= 0, [daisyuiSizeVariant[`btn-${props.size}`]]: true }"
         @click="toPage(currentPage - 1)" class="join-item btn  ">Предыдущий</button>
-      <button :class="{ ['btn-disabled']: currentPage + 1 > latestPage, ['btn-sm']: props.mode == 'small' }" @click="() => {
-        toPage(currentPage + 1)
-      }" class="join-item btn  ">Следующий</button>
+      <button
+        :class="{ ['btn-disabled']: currentPage + 1 > latestPage, [daisyuiSizeVariant[`btn-${props.size}`]]: true }"
+        @click="() => {
+          toPage(currentPage + 1)
+        }" class="join-item btn  ">Следующий</button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-
-const props = defineProps<{
+import { type InputSize, daisyuiSizeVariant } from './input/model';
+const props = withDefaults(defineProps<{
   limit?: number
   offset?: number
   count?: number
   requestUrl?: string
-  mode?: 'small'
-}>()
+  size?: InputSize
+}>(), {
+  size: 'sm'
+})
 
 const emit = defineEmits<{
   (e: 'toPage', limit?: number, offset?: number): void,
