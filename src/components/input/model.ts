@@ -24,4 +24,6 @@ export const daisyuiSizeVariant = {
   'btn-sm': 'btn-sm',
   'text-xs': 'text-xs',
   'text-sm': 'text-sm',
+  'checkbox-xs': 'checkbox-xs',
+  'checkbox-sm': 'checkbox-sm',
 }
