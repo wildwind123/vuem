@@ -1,6 +1,13 @@
 <template>
-  <Icon icon="material-symbols:delete-forever-sharp" width="16" height="16" />
+  <MaterialSymbolsDeleteForeverSharp :height="props.height" :width="props.width"></MaterialSymbolsDeleteForeverSharp>
 </template>
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
+import MaterialSymbolsDeleteForeverSharp from '~icons/material-symbols/delete-forever-sharp';
+const props = withDefaults(defineProps<{
+  height?: number
+  width?: number
+}>(), {
+  height: 16,
+  width: 16
+})
 </script>

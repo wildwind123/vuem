@@ -1,6 +1,13 @@
 <template>
-  <Icon icon="material-symbols:edit-square" width="16" height="16" />
+  <MaterialSymbolsEditSquare :height="props.height" :width="props.width"></MaterialSymbolsEditSquare>
 </template>
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
+import MaterialSymbolsEditSquare from '~icons/material-symbols/edit-square';
+const props = withDefaults(defineProps<{
+  height?: number
+  width?: number
+}>(), {
+  height: 16,
+  width: 16
+})
 </script>

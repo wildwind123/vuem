@@ -1,6 +1,13 @@
 <template>
-  <Icon icon="material-symbols:check-circle-outline" width="16" height="16" />
+  <MaterialSymbolsCheckCircleOutline :height="props.height" :width="props.width"></MaterialSymbolsCheckCircleOutline>
 </template>
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
+import MaterialSymbolsCheckCircleOutline from '~icons/material-symbols/check-circle-outline';
+const props = withDefaults(defineProps<{
+  height?: number
+  width?: number
+}>(), {
+  height: 16,
+  width: 16
+})
 </script>

@@ -1,6 +1,13 @@
 <template>
-  <Icon icon="material-symbols:close" width="16" height="16" />
+  <MaterialSymbolsClose :height="props.height" :width="props.width"></MaterialSymbolsClose>
 </template>
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
+import MaterialSymbolsClose from '~icons/material-symbols/close';
+const props = withDefaults(defineProps<{
+  height?: number
+  width?: number
+}>(), {
+  height: 16,
+  width: 16
+})
 </script>
